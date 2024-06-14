@@ -1,0 +1,119 @@
+.koleksiku {
+  padding-top: 100px;
+}
+
+ul li a {
+  text-decoration: none;
+}
+
+td a {
+  text-decoration: none;
+}
+td .btn-link {
+  text-decoration: none;
+}
+
+.aside-section {
+  background-color: var(--navbar-color);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.aside-section h4 {
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.aside-section ul {
+  padding: 0;
+  margin: 0;
+  color: #f8f9fa;
+  margin-left: 20px;
+}
+
+.aside-section li {
+  padding: 8px 0;
+}
+
+.aside-section li a {
+  color: #f8f9fa;
+  text-decoration: none;
+}
+
+.aside-section li a:hover {
+  text-decoration: underline;
+}
+
+.aside-section .form-control {
+  margin-bottom: 20px;
+}
+
+.status-button {
+  color: white;
+  text-decoration: none;
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.status-button.read {
+  background-color: green;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.status-button.want-to-read {
+  background-color: blue;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.status-button.read:hover {
+  background-color: rgba(70, 188, 52, 0.768);
+}
+.status-button.want-to-read:hover {
+  background-color: rgba(52, 86, 188, 0.768); /* Warna latar belakang saat hover */
+}
+
+.review-modal {
+  text-align: center;
+}
+
+.review-profile {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.profile-icon {
+  background-color: #f0f0f0;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.profile-name {
+  font-size: 1.2rem;
+}
+
+.review-rating {
+  margin-bottom: 1rem;
+}
+
+.star {
+  font-size: 2rem;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.star.filled {
+  color: #ffcc00;
+}

@@ -1,0 +1,115 @@
+.section-about_us .about-box img {
+  width: 70%;
+}
+
+.section-about_us .about-box {
+  padding-top: 115px;
+}
+
+.section-about_us .penulis_info {
+  padding: 60px 0;
+}
+
+.penulis_info h3 {
+  font-weight: bold;
+}
+
+.card-team {
+  padding: 2em 12em;
+  text-align: center;
+  gap: 25px;
+  padding-bottom: 70px;
+}
+
+.column {
+  width: 100%;
+  padding: 0.5em 0;
+}
+
+.card-item {
+  box-shadow: 0 0 2.4em rgba(25, 0, 58, 0.1);
+  padding: 2em 1em;
+  color: #1f003b;
+  cursor: pointer;
+  transition: 0.3s;
+  background: linear-gradient(to bottom, #ffffff, #dddddd);
+  border-radius: 20px;
+}
+
+.card-item .img-container {
+  width: 12em;
+  height: 12em;
+  padding: 0.5em;
+  border-radius: 50%;
+  margin: 0 auto 2em auto;
+}
+
+.card-item img {
+  width: 100%;
+  border-radius: 20px 0;
+}
+
+.card-item h4 {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.card-item p {
+  font-weight: 500;
+  text-transform: uppercase;
+  margin: 0.5em 0 2em 0;
+  font-style: italic;
+  font-size: 15px;
+}
+
+.icon {
+  padding: 10px 0;
+  width: 50%;
+  min-width: 180px;
+  margin: auto;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.card-item a {
+  text-decoration: none;
+  color: inherit;
+  font-size: 1.4em;
+}
+
+.card-item:hover {
+  background: linear-gradient(#e74757, #fc819e);
+  color: #fff;
+}
+
+.card-item:hover .img-container {
+  transform: scale(1.15);
+}
+
+@media (max-width: 992px) {
+  .section-about_us .about-box {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding-bottom: 20px;
+  }
+
+  .section-about_us .penulis_info {
+    text-align: start;
+    padding: 10px 20px 0;
+  }
+  .team-area .card-team {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 0;
+  }
+  .team-area .card-item p {
+    text-align: center;
+    padding: 0;
+  }
+
+  .footer {
+    padding-top: 10px;
+  }
+}

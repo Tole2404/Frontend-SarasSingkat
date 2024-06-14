@@ -1,0 +1,92 @@
+.section-pages_penulis .penulis-box img {
+  width: 80%;
+}
+
+.dropdown-header {
+  padding: 10px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.dropdown-header img {
+  margin-bottom: 10px;
+}
+
+.dropdown-header .fw-bold {
+  font-size: 1.2rem;
+}
+
+.dropdown-header .text-muted {
+  font-size: 0.9rem;
+}
+
+.section-pages_penulis .col {
+  text-align: center;
+}
+
+.penulis-box {
+  padding: 40px 0 0 0;
+}
+
+.penulis-btn button {
+  border-radius: 5px;
+  padding: 5px 20px;
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
+  border: none;
+}
+
+.section-pages_penulis {
+  padding-top: 100px;
+}
+
+.text_writer h2 {
+  padding-bottom: 10px;
+}
+
+h3 {
+  font-weight: bold;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.section-pages_penulis .penulis_info {
+  text-align: start;
+}
+
+.section-pages_penulis .penulis_info h3 {
+  text-align: start;
+}
+
+.section-pages_penulis .penulis_info p {
+  padding-top: 10px;
+  text-align: start;
+}
+
+.text_writer p {
+  width: 70%;
+  margin: 0 auto;
+  padding: 15px 0;
+}
+
+.text_writer {
+  border-radius: 5px;
+  padding: 5px 20px;
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
+  border: none;
+}
+
+@media (max-width: 992px) {
+  .section-pages_penulis .penulis-box {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+  .section-pages_penulis .penulis_info {
+    text-align: center;
+  }
+  .text_writer p {
+    width: 100%;
+    padding-bottom: 30px;
+  }
+}

@@ -1,0 +1,101 @@
+.kelola-asideBar {
+  margin-top: 70px;
+  background-color: #f5426e;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.kelola-asideBar h4 {
+  color: #fff;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.kelola-asideBar ul {
+  padding: 0;
+  margin: 0;
+  color: #fff;
+  margin-left: 20px;
+}
+
+.kelola-books .centered-column {
+  text-align: center;
+}
+
+.kelola-asideBar li {
+  margin-bottom: 10px;
+}
+
+.kelola-asideBar li a {
+  color: #f8f9fa;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.kelola-asideBar li a:hover {
+  text-decoration: underline;
+  color: #f8f9fa;
+}
+
+.kelola-buku {
+  padding: 20px;
+  padding-top: 100px;
+}
+
+.fixed-aside {
+  position: sticky;
+  top: 20px;
+}
+
+.kelola-books {
+  margin-top: 20px;
+}
+
+.kelola-books img {
+  width: 50px;
+  height: auto;
+}
+
+.year-picker::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+.year-picker::-webkit-inner-spin-button {
+  display: none;
+}
+
+.year-picker::-webkit-datetime-edit-month-field,
+.year-picker::-webkit-datetime-edit-day-field,
+.year-picker::-webkit-datetime-edit-text {
+  display: none;
+}
+
+.kelola-books button {
+  margin: 5px;
+}
+
+.btn-consistent-size.btn-danger:nth-last-child(2) {
+  background-color: rgb(30, 30, 255);
+  border-color: rgb(30, 30, 255);
+}
+
+.btn-consistent-size.btn-danger:nth-last-child(2):hover {
+  background-color: rgb(69, 69, 248);
+  border-color: rgb(69, 69, 248);
+}
+
+.btn-consistent-size.btn-danger:last-child:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+@media (max-width: 992px) {
+}
+
+@media (max-width: 768px) {
+  .fixed-aside {
+    position: static;
+    padding-bottom: 20px;
+  }
+}

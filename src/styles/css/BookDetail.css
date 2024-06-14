@@ -1,0 +1,13 @@
+.bookDetail {
+  padding-top: 100px;
+}
+
+@media (min-width: 768px) {
+  .card {
+    flex-direction: row;
+  }
+
+  .card-body {
+    display: block;
+  }
+}

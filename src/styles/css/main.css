@@ -1,0 +1,368 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+:root {
+  --primary-color: #f6f8fd;
+  --secondary-color: #e74757;
+  --color-text: #231942;
+  --navbar-color: #f46286;
+  --navbar-color-text: #000000;
+}
+
+h3 {
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Navbar */
+
+.navbar {
+  position: fixed;
+  padding: 15px 0 15px 0;
+  width: 100%;
+  background-color: var(--navbar-color);
+  text-align: center;
+  z-index: 9999;
+  transition: all 0.2s ease;
+}
+.navbar .container {
+  border-radius: 10px;
+  background-color: var(--primary-color);
+  padding: 1px 10px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 50px;
+}
+
+.navbar .nav-link a {
+  padding: 5px 10px 5px 10px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--navbar-color-text);
+}
+
+.navbar .nav-link a:hover {
+  color: var(--navbar-color);
+}
+
+.navbar .nav-link .active {
+  background-color: var(--navbar-color);
+  border-radius: 5px;
+  color: var(--primary-color);
+}
+
+.navbar .nav-link .active:hover {
+  color: var(--primary-color);
+}
+
+.nav-container {
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
+}
+
+.navbar.color-active {
+  background-color: var(--navbar-color);
+  padding: 20px 0 20px 0;
+  border-bottom: 2px solid var(--navbar-color);
+  transition: all 0.5s ease;
+}
+
+.btn-login {
+  margin-left: 2rem;
+  margin-right: 1.2rem;
+}
+
+.btn-login button {
+  padding: 5px 15px;
+  border-radius: 10px;
+  border: 3px solid var(--navbar-color);
+  background-color: var(--primary-color);
+  color: var(--color-text);
+}
+
+.btn-login button:hover {
+  color: var(--primary-color);
+  background-color: var(--navbar-color);
+}
+/* Navbar */
+
+/* Beranda */
+.beranda {
+  padding-top: 80px;
+}
+
+.beranda .header-box h3 {
+  font-size: 1.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.beranda .header-box p {
+  line-height: 2;
+  color: var(--color-text);
+  font-weight: 500px;
+}
+
+.beranda .header-box img {
+  width: 100%;
+}
+
+.fitur {
+  padding: 15px 0 10px;
+}
+
+.section-fitur .fitur-box h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--color-text);
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.section-fitur .fitur-box p {
+  line-height: 2;
+  color: var(--color-text);
+  font-weight: 500px;
+}
+
+.section-fitur .fitur-box img {
+  width: 100%;
+  margin-left: 20px;
+}
+
+.section-fitur .fitur-box .fitur img {
+  width: 8%;
+  height: 8%;
+}
+
+.section-fitur .fitur-box .fitur h1 {
+  font-size: 1em;
+  margin: 0 0 0 20px;
+  font-weight: 200;
+}
+
+.section-fitur .fitur-box .fitur span {
+  display: block;
+  font-weight: bold;
+}
+
+.header-misi h1 {
+  font-weight: bold;
+}
+
+.section-misi {
+  padding: 50px 0;
+}
+
+.section-misi .misi {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.section-misi .misi img {
+  height: 50px;
+}
+
+.section-misi .container button {
+  border-radius: 5px;
+  padding: 5px 20px;
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
+  border: none;
+}
+
+.section-writer {
+  margin-top: 50px;
+  background-color: var(--navbar-color);
+  width: 80%;
+  padding: 50px 150px;
+  border-radius: 0 20px 20px 0;
+  color: #fff;
+}
+
+.section-writer .writer-desc {
+  width: 70%;
+}
+
+.section-writer .writer button {
+  border-radius: 5px;
+  padding: 5px 20px;
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
+  border: none;
+}
+
+.faq {
+  padding: 100px 0;
+}
+
+.faq .accordion .accordion-button {
+  color: var(--color-text);
+  font-weight: bold;
+  background-color: #fff;
+  line-height: 1.5;
+}
+
+.faq .accordion .accordion-button:focus {
+  border: none;
+  box-shadow: none;
+}
+
+.form-control:focus {
+  box-shadow: var(--navbar-color);
+}
+
+/* .form-control:focus {
+  border: 2px solid rgb(31, 31, 31);
+}
+.form-control {
+  border: 1px solid rgb(31, 31, 31);
+} */
+/* Beranda */
+
+/* Responsif */
+
+@media (max-width: 992px) {
+  .btn-login {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .beranda .header-box {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .beranda .header-box h3 {
+    margin: 0;
+    font-size: 28px;
+  }
+
+  .section-misi .misi {
+    width: 100%;
+  }
+
+  .section-fitur .fitur-box {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .section-fitur .fitur-box h3 {
+    padding: 0;
+  }
+
+  .section-fitur .fitur-box img {
+    margin: 0;
+  }
+
+  .section-fitur .fitur-box h1 {
+    text-align: start;
+    font-size: 20px;
+  }
+
+  .section-fitur .fitur-box .fitur .fitur-rp.d-flex {
+    display: flex;
+    align-items: center;
+  }
+
+  .section-fitur .fitur-box .fitur .fitur-rp h1 span {
+    font-size: 15px;
+  }
+
+  .section-fitur .fitur-box .fitur .fitur-rp h1 {
+    font-size: 13px;
+  }
+
+  .section-fitur .fitur-box .fitur img {
+    width: 15%;
+    height: 15%;
+  }
+
+  .section-writer .writer-desc {
+    width: 100%;
+    text-align: center;
+  }
+
+  .section-writer .writer-desc p {
+    font-size: 15px;
+  }
+
+  .section-writer .writer-desc h2 {
+    font-size: 15px;
+  }
+
+  p {
+    text-align: start;
+    padding: 20px 0 5px 0;
+  }
+
+  .section-writer {
+    margin-top: 50px;
+    background-color: var(--navbar-color);
+    width: 100%;
+    padding: 20px 20px;
+    border-radius: 0 20px 20px 0;
+    text-align: center;
+  }
+
+  .beranda .header-box p {
+    font-size: 18px;
+    padding: 5px 0;
+    padding-bottom: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-fitur .fitur-box .fitur .fitur-rp h1 span {
+    font-size: 15px;
+  }
+
+  .section-fitur .fitur-box .fitur .fitur-rp h1 {
+    font-size: 13px;
+  }
+  .name-profile {
+    display: none;
+  }
+
+  .hero-section img {
+    display: none;
+  }
+
+  .nameLogo {
+    font-size: 15px;
+  }
+
+  /* .card img {
+    width: 50%;
+    height: 50%;
+  }
+
+  .card-new .card {
+    width: 70%;
+    height: 50%;
+    align-items: center;
+  }
+
+  .card-new {
+    align-items: center;
+  } */
+}
+
+/* Responsif */

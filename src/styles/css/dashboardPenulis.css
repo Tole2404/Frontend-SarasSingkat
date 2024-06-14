@@ -1,0 +1,62 @@
+.dashboard-penulis {
+  padding-top: 100px;
+}
+
+.dashboard-penulis input {
+  font-size: 12px; /* Ubah ukuran font */
+  padding: 10px 10px; /* Ubah padding sesuai kebutuhan */
+  height: auto;
+  width: 80%;
+}
+
+.link-newBook {
+  text-align: center;
+}
+
+.link-newBook a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.card-title.h5 {
+  font-size: 18px;
+}
+
+.card-text {
+  font-size: 15px;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 300px));
+  justify-content: center;
+  gap: 20px;
+}
+
+.book-item {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 300px));
+}
+
+.book-item img {
+  width: 100%;
+  height: 50%;
+}
+
+.book-item .book-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.book-item .book-details .book-interactions .book-rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+@media (max-width: 768px) {
+  .book-item {
+    grid-template-columns: 1fr;
+  }
+}
