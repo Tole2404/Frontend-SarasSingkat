@@ -1,48 +1,88 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Container, Row, Col, Table, Button, Form, Pagination, Modal } from "react-bootstrap";
-import NavbarDashboard from "./NavbarDashboard";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
+import axios from "axios";
+import NavbarDashboard from "./NavbarDashboard";
 import FooterComponents from "./Footer";
 import "../styles/css/kelolaBuku.css";
 
-const KelolaBuku = ({ books, onDelete, onEdit, onAdd }) => {
-  const [filteredBooks, setFilteredBooks] = useState(books);
+const KelolaBuku = ({ onAdd }) => {
+  const [books, setBooks] = useState([]);
+  const [filteredBooks, setFilteredBooks] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const booksPerPage = 5;
 
   const [showModal, setShowModal] = useState(false);
   const [newBook, setNewBook] = useState({
-    id: books.length + 1,
-    title: "",
-    author: "",
-    year: "",
+    judul_buku: "",
+    penulis: "",
+    tahun_terbit: "",
     genre: "",
-    description: "",
-    coverImage: "",
+    ringkasan_buku: "",
+    coverImage: null,
   });
   const [mode, setMode] = useState("add");
 
   useEffect(() => {
-    setFilteredBooks(books.filter((book) => book.title.toLowerCase().includes(searchTerm.toLowerCase()) || book.author.toLowerCase().includes(searchTerm.toLowerCase())));
+    const fetchBooks = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/books/index");
+        console.log('Data fetched from API:', response.data);
+
+        if (Array.isArray(response.data)) {
+          setBooks(response.data);
+          setFilteredBooks(response.data);
+        } else {
+          console.error("Data fetched is not an array:", response.data);
+          Swal.fire("Error!", "Terjadi kesalahan saat mengambil data buku.", "error");
+        }
+      } catch (error) {
+        console.error("Error fetching books:", error);
+        Swal.fire("Error!", "Terjadi kesalahan saat mengambil data buku.", "error");
+      }
+    };
+
+    fetchBooks();
+  }, []);
+
+  useEffect(() => {
+    setFilteredBooks(
+      books.filter(
+        (book) =>
+          book.judul_buku.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          book.penulis.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
   }, [searchTerm, books]);
 
-  const handleDelete = (bookId) => {
-    Swal.fire({
-      title: "Apakah Anda yakin ingin menghapus buku ini?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Ya",
-      cancelButtonText: "Tidak",
-    }).then((result) => {
+  const handleDelete = async (bookId) => {
+    try {
+      const result = await Swal.fire({
+        title: "Apakah Anda yakin ingin menghapus buku ini?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Ya",
+        cancelButtonText: "Tidak",
+      });
+
       if (result.isConfirmed) {
-        onDelete(bookId);
-        Swal.fire("Buku dihapus!", "", "success");
+        const response = await axios.delete(`http://localhost:5000/api/books/delete/${bookId}`);
+        if (response.data.status === 'SUCCESS') {
+          setBooks(books.filter((book) => book.id !== bookId));
+          setFilteredBooks(filteredBooks.filter((book) => book.id !== bookId));
+          Swal.fire("Buku dihapus!", "", "success");
+        } else {
+          Swal.fire("Gagal menghapus buku", response.data.message, "error");
+        }
       }
-    });
+    } catch (error) {
+      console.error("Error deleting book:", error);
+      Swal.fire("Error!", "Terjadi kesalahan saat menghapus buku.", "error");
+    }
   };
 
   const handleEdit = (book) => {
@@ -55,63 +95,103 @@ const KelolaBuku = ({ books, onDelete, onEdit, onAdd }) => {
     setSearchTerm(event.target.value);
   };
 
-  const handleShowModal = () => {
+  const handleShowModal = (event) => {
+    event.preventDefault();
     setMode("add");
     setNewBook({
-      id: books.length + 1,
-      title: "",
-      author: "",
-      year: "",
+      judul_buku: "",
+      penulis: "",
+      tahun_terbit: "",
       genre: "",
-      description: "",
-      coverImage: "",
+      ringkasan_buku: "",
+      coverImage: null,
     });
     setShowModal(true);
   };
 
   const handleCloseModal = () => setShowModal(false);
 
-  const handleSaveBook = () => {
-    const words = newBook.description.split(" ").filter((word) => word.trim() !== "").length;
-    const pages = Math.ceil(words / 300);
-    const bookWithPages = { ...newBook, pages: `${pages} halaman` };
-
-    if (mode === "add") {
-      const updatedBooks = [...books, bookWithPages];
-      onAdd(bookWithPages);
-      setFilteredBooks(updatedBooks);
-    } else if (mode === "edit") {
-      const updatedBooks = books.map((b) => (b.id === bookWithPages.id ? bookWithPages : b));
-      onEdit(bookWithPages);
-      setFilteredBooks(updatedBooks);
+  const handleSaveBook = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("judul_buku", newBook.judul_buku);
+      formData.append("penulis", newBook.penulis);
+      formData.append("tahun_terbit", newBook.tahun_terbit);
+      formData.append("genre", newBook.genre);
+      formData.append("ringkasan_buku", newBook.ringkasan_buku);
+      formData.append("image", newBook.coverImage);
+  
+      let response;
+  
+      if (mode === "add") {
+        response = await axios.post("http://localhost:5000/api/books/tambah-buku", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        if (response.data.status === "SUCCESS") {
+          onAdd(response.data.book);
+          setBooks([...books, response.data.book]);
+          Swal.fire("Buku ditambahkan!", "", "success").then(() => {
+            window.location.reload(); // Reload halaman setelah OK ditekan
+          });
+        } else {
+          Swal.fire("Gagal menambahkan buku", response.data.message, "error");
+        }
+      } else if (mode === "edit") {
+        response = await axios.put(`http://localhost:5000/api/books/update/${newBook.id}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        if (response.data.status === "SUCCESS") {
+          setBooks(books.map((book) => (book.id === newBook.id ? response.data.book : book)));
+          setFilteredBooks(filteredBooks.map((book) => (book.id === newBook.id ? response.data.book : book)));
+          Swal.fire("Buku diperbarui!", "", "success").then(() => {
+            window.location.reload();
+          });
+        } else {
+          Swal.fire("Gagal memperbarui buku", response.data.message, "error");
+        }
+      }
+  
+      handleCloseModal();
+    } catch (error) {
+      console.error("Error saving book:", error);
+      Swal.fire("Error!", "Terjadi kesalahan saat menyimpan buku.", "error");
     }
-
-    handleCloseModal();
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewBook((prevState) => {
-      return { ...prevState, [name]: value };
+    setNewBook((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleFileChange = (e) => {
+    setNewBook({
+      ...newBook,
+      coverImage: e.target.files[0],
     });
   };
 
   const handleResetForm = () => {
     setNewBook({
-      id: books.length + 1,
-      title: "",
-      author: "",
-      year: "",
+      judul_buku: "",
+      penulis: "",
+      tahun_terbit: "",
       genre: "",
-      description: "",
-      coverImage: "",
+      ringkasan_buku: "",
+      coverImage: null,
     });
     handleCloseModal();
   };
 
   const indexOfLastBook = currentPage * booksPerPage;
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
-  const currentBooks = filteredBooks.slice(indexOfFirstBook, indexOfLastBook);
+  const currentBooks = Array.isArray(filteredBooks) ? filteredBooks.slice(indexOfFirstBook, indexOfLastBook) : [];
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -150,79 +230,77 @@ const KelolaBuku = ({ books, onDelete, onEdit, onAdd }) => {
                       <th>Judul buku</th>
                       <th>Penulis</th>
                       <th>Tahun terbit</th>
-                      <th>Halaman</th>
                       <th>Cover</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className="text-center">
                     {currentBooks.length > 0 ? (
                       currentBooks.map((book, index) => (
-                        <tr className="centered-column" key={book.id}>
-                          <td>{indexOfFirstBook + index + 1}</td>
-                          <td>{book.title}</td>
-                          <td>{book.author}</td>
-                          <td>{book.year}</td>
-                          <td>{book.pages}</td>
+                        <tr key={index}>
+                          <td>{index + 1 + (currentPage - 1) * booksPerPage}</td>
+                          <td>{book.judul_buku}</td>
+                          <td>{book.penulis}</td>
+                          <td>{book.tahun_terbit}</td>
                           <td>
-                            <img src={book.coverImage} alt={book.title} style={{ width: "50px" }} />
+                            <img src={book.image} alt="Cover" width="50" />
                           </td>
                           <td>
-                            <Button variant="danger" size="sm" onClick={() => handleEdit(book)} className="btn-consistent-size">
-                              <FaEdit />
-                            </Button>
-                            <Button variant="danger" size="sm" onClick={() => handleDelete(book.id)} className="btn-consistent-size">
+                            <Button variant="danger" onClick={() => handleDelete(book.id)}>
                               <FaTrashAlt />
+                            </Button>
+                            <Button variant="warning" className="ml-2" onClick={() => handleEdit(book)}>
+                              <FaEdit />
                             </Button>
                           </td>
                         </tr>
                       ))
                     ) : (
                       <tr>
-                        <td colSpan="7" className="text-center">
-                          Tidak ada buku yang tersedia
+                        <td colSpan="6" className="text-center">
+                          Tidak ada data buku.
                         </td>
                       </tr>
                     )}
                   </tbody>
                 </Table>
+                <Pagination className="mt-3">
+                  {[...Array(Math.ceil(filteredBooks.length / booksPerPage)).keys()].map((index) => (
+                    <Pagination.Item key={index + 1} active={index + 1 === currentPage} onClick={() => paginate(index + 1)}>
+                      {index + 1}
+                    </Pagination.Item>
+                  ))}
+                </Pagination>
               </section>
-              <Pagination className="justify-content-center py-2">
-                <Pagination.First onClick={() => setCurrentPage(1)} disabled={currentPage === 1}>
-                  &lt;
-                </Pagination.First>
-                {Array.from({ length: Math.ceil(filteredBooks.length / booksPerPage) }, (_, index) => (
-                  <Pagination.Item key={index + 1} active={index + 1 === currentPage} onClick={() => paginate(index + 1)}>
-                    {index + 1}
-                  </Pagination.Item>
-                ))}
-                <Pagination.Last onClick={() => setCurrentPage(Math.ceil(filteredBooks.length / booksPerPage))} disabled={currentPage === Math.ceil(filteredBooks.length / booksPerPage)}>
-                  &gt;
-                </Pagination.Last>
-              </Pagination>
             </main>
           </Col>
         </Row>
       </Container>
       <FooterComponents />
 
-      <Modal show={showModal} onHide={handleCloseModal} className="py-5">
+      <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>{mode === "add" ? "Tambah Data Buku" : "Edit Data Buku"}</Modal.Title>
+          <Modal.Title>{mode === "add" ? "Tambah Buku" : "Edit Buku"}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group controlId="formTitle">
-              <Form.Label>Judul</Form.Label>
-              <Form.Control type="text" name="title" value={newBook.title} onChange={handleInputChange} />
+              <Form.Label>Judul Buku</Form.Label>
+              <Form.Control type="text" name="judul_buku" value={newBook.judul_buku} onChange={handleInputChange} />
             </Form.Group>
             <Form.Group controlId="formAuthor">
               <Form.Label>Penulis</Form.Label>
-              <Form.Control type="text" name="author" value={newBook.author} onChange={handleInputChange} />
+              <Form.Control type="text" name="penulis" value={newBook.penulis} onChange={handleInputChange} />
             </Form.Group>
             <Form.Group controlId="formYear">
               <Form.Label>Tahun terbit</Form.Label>
-              <Form.Control type="number" name="year" value={newBook.year} onChange={handleInputChange} className="year-picker" />
+              <Form.Control
+                type="number"
+                name="tahun_terbit"
+                value={newBook.tahun_terbit}
+                onChange={handleInputChange}
+                className="year-picker"
+              />
             </Form.Group>
             <Form.Group controlId="formGenre">
               <Form.Label>Genre</Form.Label>
@@ -237,11 +315,17 @@ const KelolaBuku = ({ books, onDelete, onEdit, onAdd }) => {
             </Form.Group>
             <Form.Group controlId="formDescription">
               <Form.Label>Ringkasan Buku</Form.Label>
-              <Form.Control as="textarea" rows={3} name="description" value={newBook.description} onChange={handleInputChange} />
+              <Form.Control
+                as="textarea"
+                rows={3}
+                name="ringkasan_buku"
+                value={newBook.ringkasan_buku}
+                onChange={handleInputChange}
+              />
             </Form.Group>
             <Form.Group controlId="formCoverImage">
               <Form.Label>Gambar</Form.Label>
-              <Form.Control type="file" name="coverImage" onChange={(e) => setNewBook({ ...newBook, coverImage: URL.createObjectURL(e.target.files[0]) })} />
+              <Form.Control type="file" name="coverImage" onChange={handleFileChange} />
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -259,18 +343,6 @@ const KelolaBuku = ({ books, onDelete, onEdit, onAdd }) => {
 };
 
 KelolaBuku.propTypes = {
-  books: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-      author: PropTypes.string.isRequired,
-      year: PropTypes.string.isRequired,
-      pages: PropTypes.string.isRequired,
-      coverImage: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  onDelete: PropTypes.func.isRequired,
-  onEdit: PropTypes.func.isRequired,
   onAdd: PropTypes.func.isRequired,
 };
 

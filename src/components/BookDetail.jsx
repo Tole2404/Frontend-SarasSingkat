@@ -1,38 +1,58 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import NavbarDashboard from "./NavbarDashboard";
+import axios from "axios";
 
 import "../styles/css/BookDetail.css";
 
-const BookDetail = ({ savedBooks }) => {
+const BookDetail = () => {
   const { bookId } = useParams();
-  const book = savedBooks.find((b) => b.id === parseInt(bookId));
+  const [book, setBook] = useState(null); // State to store the book details
   const [showFullDescription, setShowFullDescription] = useState(false);
 
-  if (!book) {
-    return <div>Book not found</div>;
-  }
+  useEffect(() => {
+    const fetchBook = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/books/view/${bookId}`);
+        if (response.data.status === 'SUCCESS') {
+          setBook(response.data.data);
+        } else {
+          console.error(response.data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching book:", error);
+      }
+    };
+
+    fetchBook();
+  });
 
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription);
   };
 
-  const description = Array.isArray(book.description) ? book.description.join(" ") : book.description;
-
+  // Function to count paragraphs in the book description
   const countParagraphs = (description) => {
+    if (!description) return 0; // Handle case where description is undefined or null
     return description.split(/\r\n|\r|\n/).length;
   };
 
-  const calculatePageCount = (description) => {
-    const paragraphs = countParagraphs(description);
-    return Math.ceil(paragraphs / 3);
-  };
+  // Render loading state while book details are being fetched
+  if (!book) {
+    return <div>Loading...</div>;
+  }
 
-  const pageCount = calculatePageCount(description);
+  // Extract description from the fetched book data
+  const { ringkasan_buku: description } = book;
 
-  const descriptionToShow = countParagraphs(description) >= 3 ? description.replace(/\r\n|\r|\n/g, " ") : description;
+  // Determine which part of the description to show based on paragraph count
+  const descriptionToShow =
+    countParagraphs(description) >= 3
+      ? description.replace(/\r\n|\r|\n/g, " ")
+      : description;
 
+  // JSX rendering with the fetched book details
   return (
     <>
       <NavbarDashboard />
@@ -42,25 +62,32 @@ const BookDetail = ({ savedBooks }) => {
             <Card className="d-flex justify-content-center align-items-center">
               <Row className="g-0 d-flex">
                 <Col md={4}>
-                  <Card.Img variant="top" src={book.coverImage} className="img-fluid rounded-start" />
+                  <Card.Img
+                    variant="top"
+                    src={book.image}
+                    className="img-fluid rounded-start"
+                  />
                 </Col>
                 <Col md={8} className="pt-5">
                   <Card.Body>
-                    <Card.Title>{book.title}</Card.Title>
-                    <Card.Text>Penulis: {book.author}</Card.Text>
-                    <Card.Text>Tahun Terbit: {book.publicationYear}</Card.Text>
+                    <Card.Title>{book.judul_buku}</Card.Title>
+                    <Card.Text>Penulis: {book.penulis}</Card.Text>
+                    <Card.Text>Tahun Terbit: {book.tahun_terbit}</Card.Text>
                     <Card.Text>ID Buku: A-00{book.id}</Card.Text>
                   </Card.Body>
                 </Col>
               </Row>
               <Card.Body>
                 <Card.Text>
-                  {showFullDescription ? descriptionToShow : `${descriptionToShow.substring(0, 500)}...`}
+                  {showFullDescription
+                    ? descriptionToShow || "" // Handle undefined case with empty string
+                    : `${(descriptionToShow || "").substring(0, 500)}...`} {/* Handle undefined case with empty string */}
                   <Button variant="link" onClick={toggleDescription}>
-                    {showFullDescription ? "Tampilkan Lebih Sedikit" : "Baca Selengkapnya"}
+                    {showFullDescription
+                      ? "Tampilkan Lebih Sedikit"
+                      : "Baca Selengkapnya"}
                   </Button>
                 </Card.Text>
-                <Card.Text>Jumlah Halaman: {pageCount}</Card.Text>
               </Card.Body>
             </Card>
           </Col>

@@ -1,13 +1,29 @@
+import { useState, useEffect } from "react";
 import { Form, Button, Container, Row, Col, Image, Modal } from "react-bootstrap";
 import NavbarDashboard from "../../components/NavbarDashboard";
 import FooterComponents from "../../components/Footer";
 import Komeng from "../../assets/img/testimonial/komeng.jpg";
 import "../../styles/css/profile.css";
-import { useState } from "react";
+import axios from "axios";
 
 const Profile = () => {
+  const [userData, setUserData] = useState({});
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/api/users/last");
+        setUserData(response.data); // Mengatur data user ke state
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
 
   const handleShowPasswordModal = () => setShowPasswordModal(true);
   const handleClosePasswordModal = () => setShowPasswordModal(false);

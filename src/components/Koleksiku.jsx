@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Container, Row, Col, Table, Button, Pagination, Form, Modal } from "react-bootstrap";
-import NavbarDashboard from "./NavbarDashboard";
 import { Link, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 import "../styles/css/koleksiku.css";
 import { FaTrashAlt } from "react-icons/fa";
+import NavbarDashboard from "./NavbarDashboard";
 import FooterComponents from "./Footer";
 
 const Koleksiku = ({ savedBooks, onDelete, onUpdateStatus }) => {
@@ -77,9 +77,12 @@ const Koleksiku = ({ savedBooks, onDelete, onUpdateStatus }) => {
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
-    const filteredResults = savedBooks.filter((book) => book.title.toLowerCase().includes(searchTerm) || book.author.toLowerCase().includes(searchTerm));
+    const filteredResults = savedBooks.filter(
+      (book) => book.title.toLowerCase().includes(searchTerm) || book.author.toLowerCase().includes(searchTerm)
+    );
     setFilteredBooks(filteredResults);
   };
+
   const handleReviewClick = (book) => {
     setCurrentReviewBook(book);
     setShowReviewModal(true);
@@ -157,14 +160,14 @@ const Koleksiku = ({ savedBooks, onDelete, onUpdateStatus }) => {
                         <tr key={book.id}>
                           <td>
                             <Link to={`/books/${book.id}`}>
-                              <img src={book.coverImage} alt={book.title} style={{ width: "50px", cursor: "pointer" }} />
+                              <img src={book.image} alt={book.judul_buku} style={{ width: "50px", cursor: "pointer" }} />
                             </Link>
                           </td>
                           <td>
-                            <Link to={`/books/${book.id}`}>{book.title}</Link>
+                            <Link to={`/books/${book.id}`}>{book.judul_buku}</Link>
                           </td>
-                          <td>{book.author}</td>
-                          <td className="text-center ">{book.rating}</td>
+                          <td>{book.penulis}</td>
+                          <td className="text-center">4.5</td>
                           <td>
                             <button className={`status-button ${book.status} text-center align-middle`} onClick={() => handleStatusClick(book.id, book.status)}>
                               {book.status}
@@ -176,7 +179,7 @@ const Koleksiku = ({ savedBooks, onDelete, onUpdateStatus }) => {
                             </Button>
                           </td>
                           <td>
-                            <Button variant="danger" className="text-center align-middle" onClick={() => handleDelete(book.id)}>
+                            <Button className="text-center align-middle" variant="link" onClick={() => handleDelete(book.id)}>
                               <FaTrashAlt />
                             </Button>
                           </td>
@@ -185,25 +188,23 @@ const Koleksiku = ({ savedBooks, onDelete, onUpdateStatus }) => {
                     ) : (
                       <tr>
                         <td colSpan="7" className="text-center">
-                          Tidak ada buku yang ditampilkan, silahkan tambah buku!
+                          Tidak ada buku yang cocok
                         </td>
                       </tr>
                     )}
                   </tbody>
                 </Table>
-                <Pagination className="justify-content-center py-2">
-                  <Pagination.First onClick={() => setCurrentPage(1)} disabled={currentPage === 1}>
-                    &lt;
-                  </Pagination.First>
-                  {Array.from({ length: Math.ceil(filteredBooks.length / booksPerPage) }, (_, index) => (
-                    <Pagination.Item key={index + 1} active={index + 1 === currentPage} onClick={() => paginate(index + 1)}>
-                      {index + 1}
-                    </Pagination.Item>
-                  ))}
-                  <Pagination.Last onClick={() => setCurrentPage(Math.ceil(filteredBooks.length / booksPerPage))} disabled={currentPage === Math.ceil(filteredBooks.length / booksPerPage)}>
-                    &gt;
-                  </Pagination.Last>
-                </Pagination>
+                {filteredBooks.length > booksPerPage && (
+                  <Pagination className="justify-content-center mt-4">
+                    {Array(Math.ceil(filteredBooks.length / booksPerPage))
+                      .fill()
+                      .map((_, index) => (
+                        <Pagination.Item key={index + 1} onClick={() => paginate(index + 1)} active={index + 1 === currentPage}>
+                          {index + 1}
+                        </Pagination.Item>
+                      ))}
+                  </Pagination>
+                )}
               </section>
             </main>
           </Col>
@@ -212,59 +213,50 @@ const Koleksiku = ({ savedBooks, onDelete, onUpdateStatus }) => {
 
       <Modal show={showReviewModal} onHide={handleCloseModal} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Ulasan Buku</Modal.Title>
+          <Modal.Title>Beri Ulasan</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="review-modal">
-            <div className="review-profile">
-              <div className="profile-icon">N</div>
-              <div className="profile-name">People</div>
-            </div>
-            <div className="review-rating ">
-              {[1, 2, 3, 4, 5].map((index) => (
-                <span
-                  key={index}
-                  className={`star ${index <= (hoverRating || rating) ? "filled" : ""} text-center`}
-                  onClick={() => handleRatingClick(index)}
-                  onMouseEnter={() => handleRatingHover(index)}
-                  onMouseLeave={() => handleRatingHover(0)}>
-                  ★
-                </span>
-              ))}
-            </div>
-            <Form.Group controlId="reviewText">
-              <Form.Label>Tuliskan ulasan anda disini</Form.Label>
-              <Form.Control as="textarea" rows={3} placeholder="Bagikan pengalaman membaca anda!" value={reviewText} onChange={(e) => setReviewText(e.target.value)} />
-            </Form.Group>
+          <h6>{currentReviewBook && currentReviewBook.title}</h6>
+          <div className="my-3">
+            {[...Array(5)].map((star, index) => {
+              const ratingValue = index + 1;
+              return (
+                <label key={index}>
+                  <input
+                    type="radio"
+                    name="rating"
+                    value={ratingValue}
+                    onClick={() => handleRatingClick(ratingValue)}
+                    onMouseEnter={() => handleRatingHover(ratingValue)}
+                    onMouseLeave={() => handleRatingHover(0)}
+                  />
+                  <span className="star">{ratingValue <= (hoverRating || rating) ? "★" : "☆"}</span>
+                </label>
+              );
+            })}
           </div>
+          <Form.Group controlId="reviewText">
+            <Form.Label>Tulis Ulasan</Form.Label>
+            <Form.Control as="textarea" rows={3} value={reviewText} onChange={(e) => setReviewText(e.target.value)} />
+          </Form.Group>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseModal}>
             Batal
           </Button>
           <Button variant="primary" onClick={handleReviewSubmit}>
-            Posting
+            Kirim Ulasan
           </Button>
         </Modal.Footer>
       </Modal>
+
       <FooterComponents />
     </div>
   );
 };
 
 Koleksiku.propTypes = {
-  savedBooks: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-      author: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      coverImage: PropTypes.string.isRequired,
-      genre: PropTypes.string.isRequired,
-      rating: PropTypes.number.isRequired,
-      status: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+  savedBooks: PropTypes.array.isRequired,
   onDelete: PropTypes.func.isRequired,
   onUpdateStatus: PropTypes.func.isRequired,
 };

@@ -1,9 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import { Card, Dropdown, Form, Container, Row, Col, Button, Pagination, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { dataBook } from "../data/dataBooks";
-import newBook from "../assets/img/cover/komik-onepiece.jpg";
 import Swal from "sweetalert2";
 import "../styles/css/dashboardPenulis.css";
 import heroDashboard from "../assets/hero-dashboard.svg";
@@ -14,12 +12,35 @@ const BerandaDashboardComponent = ({ savedBooks, setSavedBooks, showSaveButton }
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("");
   const [showAlert, setShowAlert] = useState(false);
+  const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    fetchBooks();
+  }, []);
+
+  const fetchBooks = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/books/index"); // Ganti dengan URL endpoint yang sesuai
+      if (!response.ok) {
+        throw new Error("Gagal mengambil data buku");
+      }
+      const data = await response.json();
+      setBooks(data);
+    } catch (error) {
+      console.error("Error fetching books:", error);
+    }
+  };
 
   const indexOfLastBook = currentPage * booksPerPage;
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
 
-  const filteredBooks = dataBook.filter((book) => {
-    const matchesSearchTerm = book.title.toLowerCase().includes(searchTerm.toLowerCase()) || book.author.toLowerCase().includes(searchTerm.toLowerCase()) || book.genre.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredBooks = books.filter((book) => {
+    const matchesSearchTerm =
+      (book.judul && book.judul.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (book.penulis && book.penulis.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (book.genre && book.genre.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (book.tahun_terbit && book.tahun_terbit.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (book.ringkasan_buku && book.ringkasan_buku.toLowerCase().includes(searchTerm.toLowerCase()));
     const matchesGenre = selectedGenre ? book.genre === selectedGenre : true;
     return matchesSearchTerm && matchesGenre;
   });
@@ -32,28 +53,20 @@ const BerandaDashboardComponent = ({ savedBooks, setSavedBooks, showSaveButton }
       behavior: "smooth",
     });
   };
+
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
     scrollToTop();
   };
 
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(filteredBooks.length / booksPerPage); i++) {
-    pageNumbers.push(i);
-  }
-
   const saveBook = (book) => {
     const isBookSaved = savedBooks.some((savedBook) => savedBook.id === book.id);
 
     if (!isBookSaved) {
-      const bookWithNumberRating = { ...book, rating: Number(book.rating), status: "want-to-read" };
+      const bookWithNumberRating = { ...book, status: "want-to-read" };
       setSavedBooks([...savedBooks, bookWithNumberRating]);
-      Swal.fire({
-        icon: "success",
-        title: "Buku tersimpan!",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      setShowAlert(true);
+      setTimeout(() => setShowAlert(false), 1500);
     } else {
       const updatedBooks = savedBooks.filter((savedBook) => savedBook.id !== book.id);
       setSavedBooks(updatedBooks);
@@ -112,12 +125,14 @@ const BerandaDashboardComponent = ({ savedBooks, setSavedBooks, showSaveButton }
           </Dropdown>
           <div className="mb-1 pb-4 card-new">
             <h4>BUKU BARU UNTUKMU </h4>
-            <Card className="p-4">
-              <Card.Img variant="top" src={newBook} />
-              <Card.Body className="link-newBook">
-                <Link to="/path-tujuan">Baca Sekarang</Link>
-              </Card.Body>
-            </Card>
+            {currentBooks.length > 0 && (
+              <Card className="p-4">
+                <Card.Img variant="top" src={currentBooks[currentBooks.length - 1].image} />
+                <Card.Body className="link-newBook">
+                  <Link to={`/books/${currentBooks[currentBooks.length - 1].id}`}>Baca Sekarang</Link>
+                </Card.Body>
+              </Card>
+            )}
           </div>
         </Col>
 
@@ -136,20 +151,16 @@ const BerandaDashboardComponent = ({ savedBooks, setSavedBooks, showSaveButton }
               {currentBooks.map((book) => (
                 <div className="book-item" key={book.id}>
                   <Card className="mb-4">
-                    <Card.Img variant="top" src={book.coverImage} />
+                    <Card.Img variant="top" src={book.image} />
                     <Card.Body className="book-details">
                       <div>
-                        <Card.Title>{book.title}</Card.Title>
-                        <Card.Text>{book.author}</Card.Text>
-                        <div className="book-interactions d-flex justify-content-center pb-3">
-                          <div className="text-center">{book.genre}</div>
-                          <span className="book-rating">
-                            <FaStar color="yellow" /> {book.rating}
-                          </span>
-                        </div>
+                        <Card.Title>{book.judul_buku}</Card.Title>
+                        <Card.Text>{book.penulis}</Card.Text>
+                        <Card.Text>{book.tahun_terbit}</Card.Text>
+                        <Card.Text>{book.genre}</Card.Text>
                         <Card.Text>
-                          {book.description.length > 125 ? book.description.substring(0, 125) + "..." : book.description}
-                          {book.description.length > 125 && (
+                          {book.ringkasan_buku && book.ringkasan_buku.length > 125 ? `${book.ringkasan_buku.substring(0, 125)}...` : book.ringkasan_buku}
+                          {book.ringkasan_buku && book.ringkasan_buku.length > 125 && (
                             <Button variant="link" onClick={() => handleReadMore(book)}>
                               selengkapnya
                             </Button>
