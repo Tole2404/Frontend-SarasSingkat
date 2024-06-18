@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Form, Button, Container, Row, Col, Image, Modal } from "react-bootstrap";
 import NavbarDashboard from "../../components/NavbarDashboard";
-import FooterComponents from "../../components/Footer";
 import Komeng from "../../assets/img/testimonial/komeng.jpg";
 import "../../styles/css/profile.css";
 import axios from "axios";
@@ -15,7 +14,7 @@ const Profile = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get("/api/users/last");
-        setUserData(response.data); // Mengatur data user ke state
+        setUserData(response.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -23,7 +22,6 @@ const Profile = () => {
 
     fetchData();
   }, []);
-
 
   const handleShowPasswordModal = () => setShowPasswordModal(true);
   const handleClosePasswordModal = () => setShowPasswordModal(false);
@@ -42,47 +40,48 @@ const Profile = () => {
               Ubah Poto Profil
             </Button>
           </Col>
-          <Col md={8}>
+          <Col md={8} className="form-column">
             <h2 className="pb-3">Profil Saya</h2>
             <Form>
               <Form.Group as={Row} className="mb-3" controlId="formName">
-                <Form.Label column sm={3}>
+                <Form.Label column sm={3} className="form-label">
                   Nama
                 </Form.Label>
                 <Col sm={6}>
-                  <Form.Control type="text" placeholder="Nama" />
+                  <Form.Control type="text" placeholder="Nama" className="form-control" />
                 </Col>
               </Form.Group>
               <Form.Group as={Row} className="mb-3" controlId="formEmail">
-                <Form.Label column sm={3}>
+                <Form.Label column sm={3} className="form-label">
                   Email
                 </Form.Label>
                 <Col sm={6}>
-                  <Form.Control type="email" placeholder="Email" disabled />
+                  <Form.Control type="email" placeholder="Email" disabled className="form-control" />
                 </Col>
               </Form.Group>
               <Form.Group as={Row} className="mb-3" controlId="formRole">
-                <Form.Label column sm={3}>
+                <Form.Label column sm={3} className="form-label">
                   Role
                 </Form.Label>
                 <Col sm={3}>
-                  <Form.Select>
+                  <Form.Select className="form-control">
                     <option value="penulis">Penulis</option>
                     <option value="pembaca">Pembaca</option>
                   </Form.Select>
                 </Col>
               </Form.Group>
               <div className="py-3">
-                <Button variant="success" onClick={handleShowPasswordModal} className="me-2">
+                <Button variant="success" onClick={handleShowPasswordModal} className="button me-2">
                   Ganti Password
                 </Button>
-                <Button variant="primary">Update</Button>
+                <Button variant="primary" className="button">
+                  Update
+                </Button>
               </div>
             </Form>
           </Col>
         </Row>
       </Container>
-      <FooterComponents />
 
       <Modal show={showPasswordModal} onHide={handleClosePasswordModal} centered>
         <Modal.Header closeButton>

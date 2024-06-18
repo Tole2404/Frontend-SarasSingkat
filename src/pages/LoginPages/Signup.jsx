@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Button, Form, Row, Col, Tab, Tabs } from "react-bootstrap";
+import { Button, Form, Row, Col, Tab, Tabs, InputGroup, FormControl } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import LoginComponents from "../../components/LoginComponents";
 import "../../styles/css/authentifikasi.css";
 import logo from "../../assets/logo.svg";
-import axios from 'axios';
+import axios from "axios";
+import { EyeSlash, Eye } from "react-bootstrap-icons";
 
 const Signup = () => {
   const queryParams = new URLSearchParams(location.search);
@@ -12,48 +13,58 @@ const Signup = () => {
 
   const [key, setKey] = useState("pembaca");
   const [formData, setFormData] = useState({
-    nama_depan: '',
-    nama_belakang: '',
+    nama_depan: "",
+    nama_belakang: "",
     role: "pembaca",
-    email: '',
-    password: '',
-    confirmPassword: ''
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Memeriksa apakah password dan konfirmasi password cocok
     if (formData.password !== formData.confirmPassword) {
       alert("Konfirmasi password tidak cocok dengan password.");
       return;
     }
-  
+
     // Membuat objek data yang akan dikirimkan ke backend
     const sendData = {
       nama_depan: formData.nama_depan,
       nama_belakang: formData.nama_belakang,
       role: formData.role,
       email: formData.email,
-      password: formData.password
+      password: formData.password,
     };
-  
+
     try {
-      const response = await axios.post('http://localhost:5000/api/users/signup', sendData);
+      const response = await axios.post("http://localhost:5000/api/users/signup", sendData);
       console.log(response.data);
       // Anda dapat menambahkan logika redirect atau pesan sukses di sini
     } catch (error) {
-      console.error('There was an error!', error);
+      console.error("There was an error!", error);
     }
   };
-  
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
 
   return (
     <div>
@@ -71,13 +82,17 @@ const Signup = () => {
               <p>Masuk Sebagai</p>
               <div className="line"></div>
             </div>
-            <Tabs id="controlled-tab-example" activeKey={key} onSelect={(k) => {
-              setKey(k); 
-              setFormData({
-                ...formData,
-                role: k
-              });
-            }} className="mb-3">
+            <Tabs
+              id="controlled-tab-example"
+              activeKey={key}
+              onSelect={(k) => {
+                setKey(k);
+                setFormData({
+                  ...formData,
+                  role: k,
+                });
+              }}
+              className="mb-3">
               <Tab eventKey="pembaca" title="Pembaca" className="nav-item nav-link"></Tab>
               <Tab eventKey="penulis" title="Penulis" className="nav-item nav-link"></Tab>
             </Tabs>
@@ -85,58 +100,34 @@ const Signup = () => {
               <div className="form-signup name-input-group">
                 <Form.Group className="name-input mb-3" controlId="formBasicFirstName">
                   <Form.Label>Nama Depan</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Nama Depan"
-                    name="nama_depan"
-                    value={formData.nama_depan}
-                    onChange={handleChange}
-                  />
+                  <Form.Control type="text" placeholder="Nama Depan" name="nama_depan" value={formData.nama_depan} onChange={handleChange} />
                 </Form.Group>
 
                 <Form.Group className="name-input mb-3" controlId="formBasicLastName">
                   <Form.Label>Nama Belakang</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Nama Belakang"
-                    name="nama_belakang"
-                    value={formData.nama_belakang}
-                    onChange={handleChange}
-                  />
+                  <Form.Control type="text" placeholder="Nama Belakang" name="nama_belakang" value={formData.nama_belakang} onChange={handleChange} />
                 </Form.Group>
               </div>
 
               <Form.Group className="email-input mb-3" controlId="formBasicEmail">
                 <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Masukkan email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
+                <Form.Control type="email" placeholder="Masukkan email" name="email" value={formData.email} onChange={handleChange} />
               </Form.Group>
 
               <Form.Group className="password-input mb-3" controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                />
+                <div className="custom-input-group">
+                  <FormControl type={showPassword ? "text" : "password"} placeholder="Password" name="password" value={formData.password} onChange={handleChange} />
+                  <InputGroup.Text onClick={togglePasswordVisibility}>{showPassword ? <EyeSlash /> : <Eye />}</InputGroup.Text>
+                </div>
               </Form.Group>
 
               <Form.Group className="confirm-password-input mb-3" controlId="formBasicConfirmPassword">
                 <Form.Label>Konfirmasi Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Konfirmasi Password"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                />
+                <div className="custom-input-group">
+                  <FormControl type={showConfirmPassword ? "text" : "password"} placeholder="Konfirmasi Password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
+                  <InputGroup.Text onClick={toggleConfirmPasswordVisibility}>{showConfirmPassword ? <EyeSlash /> : <Eye />}</InputGroup.Text>
+                </div>
               </Form.Group>
 
               <div className="btn-submit text-center">

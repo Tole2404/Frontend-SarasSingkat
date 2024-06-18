@@ -1,15 +1,15 @@
-import logo from "../assets/logo.svg";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar, Container, Nav, Dropdown } from "react-bootstrap";
-import { navLinksDashboard, navLinksDashboardPenulis } from "../data/index";
-import { useNavigate, NavLink, Link } from "react-router-dom";
+import { useNavigate, NavLink, Link, useLocation } from "react-router-dom";
 import { FaUser, FaSignOutAlt } from "react-icons/fa";
-
+import { navLinksDashboard, navLinksDashboardPenulis } from "../data/index";
+import logo from "../assets/logo.svg";
 import nadia from "../assets/img/testimonial/nadia.jpg";
 
 const NavbarDashboard = ({ dashboardType }) => {
   const [changeColor, setChangeColor] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     window.addEventListener("scroll", changeBgColor);
@@ -24,7 +24,9 @@ const NavbarDashboard = ({ dashboardType }) => {
     }
   };
 
-  const links = dashboardType === "penulis" ? navLinksDashboardPenulis : navLinksDashboard;
+  // Menentukan basis URL berdasarkan tipe dashboard
+  const basePath = dashboardType === "penulis" ? "/dashboard-penulis" : "/dashboard-pembaca";
+  const profilePath = `${basePath}/profil`;
 
   return (
     <div>
@@ -39,15 +41,13 @@ const NavbarDashboard = ({ dashboardType }) => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mx-auto nav-container">
-              {links.map((link) => {
-                return (
-                  <div className="nav-link" key={link.id}>
-                    <NavLink to={link.path} className={({ isActive, isPending }) => (isPending ? "pending" : isActive ? "active" : "")} end>
-                      {link.text}
-                    </NavLink>
-                  </div>
-                );
-              })}
+              {navLinksDashboard.map((link) => (
+                <div className="nav-link" key={link.id}>
+                  <NavLink to={link.path} className={({ isActive, isPending }) => (isPending ? "pending" : isActive ? "active" : "")} end>
+                    {link.text}
+                  </NavLink>
+                </div>
+              ))}
             </Nav>
             <div className="name-profile fw-bold">Bayu</div>
             <Dropdown align="end">
@@ -62,7 +62,7 @@ const NavbarDashboard = ({ dashboardType }) => {
                   <div className="text-muted">Penulis</div>
                 </div>
                 <Dropdown.Divider />
-                <Dropdown.Item as={Link} to="/profile">
+                <Dropdown.Item as={Link} to={profilePath}>
                   <FaUser className="me-2" /> Profil
                 </Dropdown.Item>
                 <Dropdown.Item>

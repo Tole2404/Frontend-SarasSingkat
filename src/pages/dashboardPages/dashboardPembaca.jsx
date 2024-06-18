@@ -1,14 +1,14 @@
 import "../../styles/css/dashboardPenulis.css";
-import FooterComponents from "../../components/Footer";
+import FooterDasboard from "../../components/FooterDasboard";
 import BerandaDashboardComponent from "../../components/BerandaDashboardComponent";
-import NavbarDashboard from "../../components/NavbarDashboard"; // Import NavbarDashboard
+import NavbarDashboard from "../../components/NavbarDashboard";
 
 const DashboardPembaca = ({ savedBooks, setSavedBooks }) => {
   return (
     <div>
       <NavbarDashboard dashboardType="pembaca" />
       <BerandaDashboardComponent savedBooks={savedBooks} setSavedBooks={setSavedBooks} showSaveButton={true} />
-      <FooterComponents />
+      <FooterDasboard />
     </div>
   );
 };

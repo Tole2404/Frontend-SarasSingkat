@@ -30,7 +30,7 @@ const Beranda = () => {
             <Container>
               <Row className="header-box d-flex align-items-center">
                 <Col>
-                  <h3 className="text-start"> Luaskan Wawasan Anda Tanpa Harus Membaca Buku Secara Keseluruhan</h3>
+                  <h3 className=""> Luaskan Wawasan Anda Tanpa Harus Membaca Buku Secara Keseluruhan</h3>
                   <p>
                     Bosan dengan buku yang tebal dan memakan waktu lama untuk dibaca? SarasSingkat hadir sebagai solusi! Platform digital ini menyediakan ringkasan buku yang informatif dan menarik dalam waktu singkat, memungkinkan Anda
                     untuk mendapatkan pengetahuan dan wawasan baru tanpa harus menghabiskan banyak waktu.
@@ -45,7 +45,7 @@ const Beranda = () => {
         </div>
       </LoadingScreen>
 
-      <section className="section-misi ">
+      <section className="section-misi">
         <div className="header-misi text-center">
           <h3>Misi Kami</h3>
         </div>

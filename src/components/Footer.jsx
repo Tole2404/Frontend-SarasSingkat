@@ -35,10 +35,10 @@ const FooterComponents = () => {
                   <a href="https://www.linkedin.com/in/tunggulbayukusuma/">Tunggul Bayu Kusuma</a>
                 </li>
                 <li className="team-list-item">
-                  <a href="https://www.linkedin.com/in/tunggulbayukusuma/">Nadia Fitriani</a>
+                  <a href="https://www.linkedin.com/in/nadia-fitriani-554a7829b/">Nadia Fitriani</a>
                 </li>
                 <li className="team-list-item">
-                  <a href="https://www.linkedin.com/in/tunggulbayukusuma/">Jeffrey Jeverson Pasaribu</a>
+                  <a href="https://www.linkedin.com/in/jeffreypasaribu/">Jeffrey Jeverson Pasaribu</a>
                 </li>
               </ul>
             </div>

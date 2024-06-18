@@ -62,13 +62,13 @@ const Tentang = () => {
                   <p>{member.position}</p>
                   <span>{member.univ}</span>
                   <div className="icon">
-                    <a href="#" className="social-tw">
+                    <a href={member.socialLinks.linkedin} className="social-tw">
                       <FontAwesomeIcon icon={faLinkedinIn} />
                     </a>
-                    <a href="#" className="social-tw">
+                    <a href={member.socialLinks.instagram} className="social-tw">
                       <FontAwesomeIcon icon={faInstagram} />
                     </a>
-                    <a href="#" className="social-tw">
+                    <a href={member.socialLinks.github} className="social-tw">
                       <FontAwesomeIcon icon={faGithub} />
                     </a>
                   </div>

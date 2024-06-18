@@ -1,5 +1,5 @@
 import NavbarDashboard from "./NavbarDashboard";
-import FooterComponents from "./Footer";
+import FooterDasboard from "./FooterDasboard";
 import KomunitasComponent from "./KomunitasComponent";
 
 const Komunitas = () => {
@@ -7,7 +7,7 @@ const Komunitas = () => {
     <>
       <NavbarDashboard />
       <KomunitasComponent />
-      <FooterComponents />
+      <FooterDasboard />
     </>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Pagination, Card } from "react-bootstrap";
 import NavbarDashboard from "./NavbarDashboard";
-import FooterComponents from "./Footer";
+import FooterDasboard from "./FooterDasboard";
 import Rating from "react-rating-stars-component";
 
 import { daftarUlasan } from "../data/dataBooks";
@@ -47,7 +47,7 @@ const DaftarUlasan = () => {
           </Pagination>
         </Container>
       </div>
-      <FooterComponents />
+      <FooterDasboard />
     </div>
   );
 };

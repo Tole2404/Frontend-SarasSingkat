@@ -70,8 +70,10 @@ const App = () => {
         <Route path="/dashboard-pembaca/koleksiku" element={<Koleksiku savedBooks={savedBooks} onDelete={handleDeleteBook} onUpdateStatus={handleUpdateBookStatus} />} />
         <Route path="/books/:bookId" element={<BookDetail savedBooks={savedBooks} />} />
         <Route path="/dashboard-pembaca/komunitas" element={<Komunitas />} />
+        <Route path="/dashboard-pembaca/profil" element={<Profile />} />
         <Route path="/dashboard-penulis/" element={<DashboardPenulis />} />
         <Route path="/dashboard-penulis/komunitas" element={<KomunitasPenulis />} />
+        <Route path="/dashboard-penulis/profil" element={<Profile />} />
         <Route path="/dashboard-penulis/kelolabuku" element={<KelolaBuku books={managedBooks} onDelete={handleDeleteManagedBook} onEdit={handleEditBook} onAdd={handleAddBook} />} /> <Route path="/profile" element={<Profile />} />
         <Route path="/dashboard-penulis/daftar-ulasan" element={<DaftarUlasan />} /> {/* Route baru */}
       </Routes>

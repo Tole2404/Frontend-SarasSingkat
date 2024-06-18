@@ -12,7 +12,7 @@ import fiturIcon5 from "../assets/img/fitur/fitur5.svg";
 
 import nadia from "../assets/img/testimonial/nadia.jpg";
 import bayu from "../assets/img/testimonial/bayu.jpg";
-import komeng from "../assets/img/testimonial/komeng.jpg";
+import jeffrey from "../assets/img/testimonial/jeffrey.jpg";
 
 export const dataTeam = [
   {
@@ -21,6 +21,11 @@ export const dataTeam = [
     nama: "Nadia Fitriani",
     position: "UI/UX Designer",
     univ: "Institut Teknologi Garut",
+    socialLinks: {
+      linkedin: "https://www.linkedin.com/in/nadia-fitriani-554a7829b/",
+      instagram: "https://www.instagram.com/ndiaftr_",
+      github: "https://github.com/nadiaff25",
+    },
   },
   {
     id: 2,
@@ -28,13 +33,23 @@ export const dataTeam = [
     nama: "Tunggul Bayu Kusuma",
     position: "Front-End",
     univ: "Universitas Budi Luhur",
+    socialLinks: {
+      linkedin: "https://www.linkedin.com/in/tunggulbayukusuma/",
+      instagram: "https://www.instagram.com/tnggulbyksma",
+      github: "https://github.com/Tole2404",
+    },
   },
   {
     id: 3,
-    img: komeng,
+    img: jeffrey,
     nama: "Jeffrey Jeverson Pasaribu",
     position: "Back-End",
     univ: "institut teknologi del",
+    socialLinks: {
+      linkedin: "https://www.linkedin.com/in/jeffreypasaribu",
+      instagram: "https://www.instagram.com/jeffpsrb_?igsh=MjBkbXF5N2UyNXFs",
+      github: "https://github.com/jeffpsrb",
+    },
   },
 ];
 
@@ -123,12 +138,12 @@ export const navLinks = [
   {
     id: 2,
     path: "/penulis",
-    text: "penulis",
+    text: "Penulis",
   },
   {
     id: 3,
     path: "/tentang",
-    text: "tentang",
+    text: "Tentang",
   },
 ];
 

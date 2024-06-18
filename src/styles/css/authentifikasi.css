@@ -83,6 +83,26 @@
   color: #000;
 }
 
+.custom-input-group {
+  display: flex; /* Mengatur elemen anak berbaris horizontal */
+  align-items: center; /* Menyelaraskan elemen anak secara vertikal */
+  position: relative; /* Konteks posisi untuk penyesuaian lebih lanjut */
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+
+.custom-input-group input {
+  flex: 1; /* Mengambil ruang tersisa */
+  border-right: none; /* Menghilangkan border kanan pada input */
+  border-radius: 0.25rem 0 0 0.25rem; /* Menyesuaikan border radius */
+}
+
+.custom-input-group .input-group-text {
+  cursor: pointer; /* Menambahkan efek pointer pada ikon */
+  border-left: none; /* Menghilangkan border kiri pada ikon */
+  border-radius: 0 0.25rem 0.25rem 0; /* Menyesuaikan border radius */
+}
+
 .form-login ul li button:hover {
   background-color: #ffffff;
   color: #000;
@@ -158,6 +178,10 @@
     width: 95%;
     height: auto;
   }
+
+  .custom-input-group {
+    border: none;
+  }
   .name-input input,
   .email-input input,
   .password-input input,
@@ -208,14 +232,21 @@
 
 @media (max-width: 576px) {
   .name-input input,
-  .email-input input,
-  .password-input input,
-  .confirm-password-input input {
+  .email-input input {
     width: 300px;
     padding: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: box-shadow 0.3s ease-in-out;
   }
+
+  .password-input input,
+  .confirm-password-input input {
+    width: 260px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease-in-out;
+  }
+
   .btn-submit button {
     width: 300px;
   }

@@ -109,7 +109,7 @@ h3 {
   font-weight: 600;
   color: var(--color-text);
   margin-bottom: 30px;
-  text-align: center;
+  text-align: start;
 }
 
 .beranda .header-box p {
@@ -153,7 +153,7 @@ h3 {
 .section-fitur .fitur-box .fitur h1 {
   font-size: 1em;
   margin: 0 0 0 20px;
-  font-weight: 200;
+  font-weight: 300;
 }
 
 .section-fitur .fitur-box .fitur span {
@@ -334,6 +334,14 @@ h3 {
     font-size: 15px;
   }
 
+  .beranda p {
+    text-align: justify;
+  }
+
+  .beranda .header-box h3 {
+    text-align: center;
+  }
+
   .section-fitur .fitur-box .fitur .fitur-rp h1 {
     font-size: 13px;
   }
@@ -349,20 +357,9 @@ h3 {
     font-size: 15px;
   }
 
-  /* .card img {
-    width: 50%;
-    height: 50%;
+  .section-misi .misi p {
+    text-align: justify;
   }
-
-  .card-new .card {
-    width: 70%;
-    height: 50%;
-    align-items: center;
-  }
-
-  .card-new {
-    align-items: center;
-  } */
 }
 
 /* Responsif */

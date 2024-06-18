@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { Row, Col, Form, Button } from "react-bootstrap";
+import { Row, Col, Form, Button, InputGroup, FormControl } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate instead of useHistory
 import axios from "axios";
 import logo from "../../assets/logo.svg";
 import "../../styles/css/authentifikasi.css";
 import LoginComponents from "../../components/LoginComponents";
+
+import { EyeSlash, Eye } from "react-bootstrap-icons";
 
 const Login = () => {
   const navigate = useNavigate(); // Use useNavigate instead of useHistory
@@ -25,10 +27,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/users/login",
-        formData
-      );
+      const response = await axios.post("http://localhost:5000/api/users/login", formData);
 
       if (response.data.status === "SUCCESS") {
         const { role } = response.data.user;
@@ -49,6 +48,12 @@ const Login = () => {
     }
   };
 
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div>
       <Row>
@@ -63,33 +68,20 @@ const Login = () => {
             <Form onSubmit={handleSubmit}>
               <Form.Group className="email-input mb-3" controlId="formBasicEmail">
                 <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Masukkan email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                />
+                <Form.Control type="email" placeholder="Masukkan email" name="email" value={formData.email} onChange={handleChange} required />
               </Form.Group>
 
               <Form.Group className="password-input mb-3" controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                />
+                <InputGroup>
+                  <FormControl type={showPassword ? "text" : "password"} placeholder="Password" name="password" value={formData.password} onChange={handleChange} required />
+                  <InputGroup.Text onClick={togglePasswordVisibility}>{showPassword ? <EyeSlash /> : <Eye />}</InputGroup.Text>
+                </InputGroup>
               </Form.Group>
               <div className="btn-submit text-center">
                 <Button type="submit">Masuk</Button>
               </div>
-              {errorMessage && (
-                <div className="text-danger mt-3">{errorMessage}</div>
-              )}
+              {errorMessage && <div className="text-danger mt-3">{errorMessage}</div>}
             </Form>
             <div className="link-to_signup py-2">
               <Link to={"/signup"}>

@@ -1,5 +1,20 @@
 import coverBook from "../assets/img/cover/komik-onepiece.jpg";
 import coverBook1 from "../assets/img/cover/filosofi.jpg";
+import bayu from "../assets/img/testimonial/bayu.jpg";
+import nadia from "../assets/img/testimonial/nadia.jpg";
+import jeffrey from "../assets/img/testimonial/jeffrey.jpg";
+import Maesheilla from "../assets/img/testimonial/mae.jpg";
+import Zul from "../assets/img/testimonial/zul.jpg";
+import Fira from "../assets/img/testimonial/fira.jpg";
+import Indira from "../assets/img/testimonial/indira.jpg";
+import Lia from "../assets/img/testimonial/lia.jpg";
+import Fadia from "../assets/img/testimonial/fadia.jpg";
+import Ridho from "../assets/img/testimonial/ridho.jpg";
+import Darril from "../assets/img/testimonial/darril.jpg";
+import Deva from "../assets/img/testimonial/deva.jpg";
+import Kahfi from "../assets/img/testimonial/kahfi.jpg";
+import Zaki from "../assets/img/testimonial/jaki.jpg";
+import Fadhil from "../assets/img/testimonial/fadil.jpg";
 
 export const daftarUlasan = [
   {
@@ -257,34 +272,122 @@ export const dataBook = [
 export const reviewers = [
   {
     id: 1,
-    name: "Petrik",
+    name: "Bayu",
     location: "Jakarta",
     description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-    image: coverBook1,
+    image: bayu,
     books: 50,
   },
   {
     id: 2,
-    name: "Syndi",
+    name: "Nadia",
     location: "Indonesia",
     description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-    image: coverBook1,
-    books: 30,
+    image: nadia,
+    books: 45,
   },
   {
     id: 3,
-    name: "Alana",
+    name: "Jeffrey",
     location: "Indonesia",
     description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-    image: coverBook1,
-    books: 25,
+    image: jeffrey,
+    books: 40,
   },
   {
     id: 4,
-    name: "Zara",
+    name: "Maesheilla",
     location: "Indonesia",
     description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-    image: coverBook1,
+    image: Maesheilla,
+    books: 35,
+  },
+  {
+    id: 5,
+    name: "Zul Widya",
+    location: "Indonesia",
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    image: Zul,
+    books: 30,
+  },
+  {
+    id: 6,
+    name: "Fira",
+    location: "Indonesia",
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    image: Fira,
+    books: 25,
+  },
+  {
+    id: 7,
+    name: "Indira",
+    location: "Indonesia",
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    image: Indira,
     books: 20,
+  },
+  {
+    id: 8,
+    name: "Lia",
+    location: "Indonesia",
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    image: Lia,
+    books: 18,
+  },
+  {
+    id: 9,
+    name: "Fadia",
+    location: "Indonesia",
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    image: Fadia,
+    books: 16,
+  },
+  {
+    id: 10,
+    name: "Ridho",
+    location: "Indonesia",
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    image: Ridho,
+    books: 14,
+  },
+  {
+    id: 11,
+    name: "Darril",
+    location: "Indonesia",
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    image: Darril,
+    books: 12,
+  },
+  {
+    id: 12,
+    name: "Kahfi",
+    location: "Indonesia",
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    image: Kahfi,
+    books: 10,
+  },
+  {
+    id: 13,
+    name: "Deva",
+    location: "Indonesia",
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    image: Deva,
+    books: 8,
+  },
+  {
+    id: 14,
+    name: "Zaki Syifa",
+    location: "Indonesia",
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    image: Zaki,
+    books: 6,
+  },
+  {
+    id: 15,
+    name: "Fadhil",
+    location: "Indonesia",
+    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    image: Fadhil,
+    books: 6,
   },
 ];

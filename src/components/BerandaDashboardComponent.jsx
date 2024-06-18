@@ -100,7 +100,7 @@ const BerandaDashboardComponent = ({ savedBooks, setSavedBooks, showSaveButton }
   };
 
   return (
-    <Container className="dashboard-penulis">
+    <Container className="dashboard-penulis min-vh-100">
       {showAlert && <Alert variant="success">Buku ini tersimpan!</Alert>}
       <Row>
         <Col xs={12} md={4} lg={3}>

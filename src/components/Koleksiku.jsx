@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import "../styles/css/koleksiku.css";
 import { FaTrashAlt } from "react-icons/fa";
 import NavbarDashboard from "./NavbarDashboard";
-import FooterComponents from "./Footer";
+import FooterDasboard from "./FooterDasboard";
 
 const Koleksiku = ({ savedBooks, onDelete, onUpdateStatus }) => {
   const location = useLocation();
@@ -77,9 +77,7 @@ const Koleksiku = ({ savedBooks, onDelete, onUpdateStatus }) => {
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
-    const filteredResults = savedBooks.filter(
-      (book) => book.title.toLowerCase().includes(searchTerm) || book.author.toLowerCase().includes(searchTerm)
-    );
+    const filteredResults = savedBooks.filter((book) => book.title.toLowerCase().includes(searchTerm) || book.author.toLowerCase().includes(searchTerm));
     setFilteredBooks(filteredResults);
   };
 
@@ -222,14 +220,7 @@ const Koleksiku = ({ savedBooks, onDelete, onUpdateStatus }) => {
               const ratingValue = index + 1;
               return (
                 <label key={index}>
-                  <input
-                    type="radio"
-                    name="rating"
-                    value={ratingValue}
-                    onClick={() => handleRatingClick(ratingValue)}
-                    onMouseEnter={() => handleRatingHover(ratingValue)}
-                    onMouseLeave={() => handleRatingHover(0)}
-                  />
+                  <input type="radio" name="rating" value={ratingValue} onClick={() => handleRatingClick(ratingValue)} onMouseEnter={() => handleRatingHover(ratingValue)} onMouseLeave={() => handleRatingHover(0)} />
                   <span className="star">{ratingValue <= (hoverRating || rating) ? "★" : "☆"}</span>
                 </label>
               );
@@ -250,7 +241,7 @@ const Koleksiku = ({ savedBooks, onDelete, onUpdateStatus }) => {
         </Modal.Footer>
       </Modal>
 
-      <FooterComponents />
+      <FooterDasboard />
     </div>
   );
 };

@@ -1,13 +1,13 @@
-import FooterComponents from "./Footer";
+import FooterDasboard from "./FooterDasboard";
 import KomunitasComponent from "./KomunitasComponent";
-import NavbarDashboard from "./NavbarDashboard"; // Ganti import ini
+import NavbarDashboard from "./NavbarDashboard";
 
 const KomunitasPenulis = () => {
   return (
     <div>
       <NavbarDashboard dashboardType="penulis" />
       <KomunitasComponent />
-      <FooterComponents />
+      <FooterDasboard />
     </div>
   );
 };

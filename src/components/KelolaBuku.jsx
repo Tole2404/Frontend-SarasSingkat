@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
 import axios from "axios";
 import NavbarDashboard from "./NavbarDashboard";
-import FooterComponents from "./Footer";
+import FooterDasboard from "./FooterDasboard";
 import "../styles/css/kelolaBuku.css";
 
 const KelolaBuku = ({ onAdd }) => {
@@ -31,7 +31,7 @@ const KelolaBuku = ({ onAdd }) => {
     const fetchBooks = async () => {
       try {
         const response = await axios.get("http://localhost:5000/api/books/index");
-        console.log('Data fetched from API:', response.data);
+        console.log("Data fetched from API:", response.data);
 
         if (Array.isArray(response.data)) {
           setBooks(response.data);
@@ -50,13 +50,7 @@ const KelolaBuku = ({ onAdd }) => {
   }, []);
 
   useEffect(() => {
-    setFilteredBooks(
-      books.filter(
-        (book) =>
-          book.judul_buku.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          book.penulis.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    );
+    setFilteredBooks(books.filter((book) => book.judul_buku.toLowerCase().includes(searchTerm.toLowerCase()) || book.penulis.toLowerCase().includes(searchTerm.toLowerCase())));
   }, [searchTerm, books]);
 
   const handleDelete = async (bookId) => {
@@ -71,7 +65,7 @@ const KelolaBuku = ({ onAdd }) => {
 
       if (result.isConfirmed) {
         const response = await axios.delete(`http://localhost:5000/api/books/delete/${bookId}`);
-        if (response.data.status === 'SUCCESS') {
+        if (response.data.status === "SUCCESS") {
           setBooks(books.filter((book) => book.id !== bookId));
           setFilteredBooks(filteredBooks.filter((book) => book.id !== bookId));
           Swal.fire("Buku dihapus!", "", "success");
@@ -120,9 +114,9 @@ const KelolaBuku = ({ onAdd }) => {
       formData.append("genre", newBook.genre);
       formData.append("ringkasan_buku", newBook.ringkasan_buku);
       formData.append("image", newBook.coverImage);
-  
+
       let response;
-  
+
       if (mode === "add") {
         response = await axios.post("http://localhost:5000/api/books/tambah-buku", formData, {
           headers: {
@@ -154,7 +148,7 @@ const KelolaBuku = ({ onAdd }) => {
           Swal.fire("Gagal memperbarui buku", response.data.message, "error");
         }
       }
-  
+
       handleCloseModal();
     } catch (error) {
       console.error("Error saving book:", error);
@@ -198,7 +192,7 @@ const KelolaBuku = ({ onAdd }) => {
   return (
     <div>
       <NavbarDashboard dashboardType="penulis" />
-      <Container className="kelola-buku">
+      <Container className="kelola-buku min-vh-100">
         <Row>
           <Col xs={12} md={4} lg={3} className="fixed-aside">
             <aside className="kelola-asideBar">
@@ -276,7 +270,7 @@ const KelolaBuku = ({ onAdd }) => {
           </Col>
         </Row>
       </Container>
-      <FooterComponents />
+      <FooterDasboard />
 
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
@@ -294,13 +288,7 @@ const KelolaBuku = ({ onAdd }) => {
             </Form.Group>
             <Form.Group controlId="formYear">
               <Form.Label>Tahun terbit</Form.Label>
-              <Form.Control
-                type="number"
-                name="tahun_terbit"
-                value={newBook.tahun_terbit}
-                onChange={handleInputChange}
-                className="year-picker"
-              />
+              <Form.Control type="number" name="tahun_terbit" value={newBook.tahun_terbit} onChange={handleInputChange} className="year-picker" />
             </Form.Group>
             <Form.Group controlId="formGenre">
               <Form.Label>Genre</Form.Label>
@@ -315,13 +303,7 @@ const KelolaBuku = ({ onAdd }) => {
             </Form.Group>
             <Form.Group controlId="formDescription">
               <Form.Label>Ringkasan Buku</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                name="ringkasan_buku"
-                value={newBook.ringkasan_buku}
-                onChange={handleInputChange}
-              />
+              <Form.Control as="textarea" rows={3} name="ringkasan_buku" value={newBook.ringkasan_buku} onChange={handleInputChange} />
             </Form.Group>
             <Form.Group controlId="formCoverImage">
               <Form.Label>Gambar</Form.Label>

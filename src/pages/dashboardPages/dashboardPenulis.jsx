@@ -1,4 +1,4 @@
-import FooterComponents from "../../components/Footer";
+import FooterDasboard from "../../components/FooterDasboard";
 import BerandaDashboardComponent from "../../components/BerandaDashboardComponent";
 import NavbarDashboard from "../../components/NavbarDashboard";
 
@@ -7,7 +7,7 @@ const DashboardPenulis = () => {
     <div>
       <NavbarDashboard dashboardType="penulis" />
       <BerandaDashboardComponent showSaveButton={false} />
-      <FooterComponents pageType="penulis" />
+      <FooterDasboard />
     </div>
   );
 };
