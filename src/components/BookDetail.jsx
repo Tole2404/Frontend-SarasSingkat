@@ -14,7 +14,7 @@ const BookDetail = () => {
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        const response = await axios.get(`http://sarassingkat.devasa.web.id/api/books/view/${bookId}`);
+        const response = await axios.get(`https://sarassingkat.devasa.web.id/api/books/view/${bookId}`);
         if (response.data.status === "SUCCESS") {
           setBook(response.data.data);
         } else {

@@ -20,7 +20,7 @@ const BerandaDashboardComponent = ({ savedBooks, setSavedBooks, showSaveButton }
 
   const fetchBooks = async () => {
     try {
-      const response = await fetch("http://sarassingkat.devasa.web.id/api/books/index"); // Ganti dengan URL endpoint yang sesuai
+      const response = await fetch("https://sarassingkat.devasa.web.id/api/books/index");
       if (!response.ok) {
         throw new Error("Gagal mengambil data buku");
       }

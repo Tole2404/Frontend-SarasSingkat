@@ -30,7 +30,7 @@ const KelolaBuku = ({ onAdd }) => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get("http://sarassingkat.devasa.web.id/api/books/index");
+        const response = await axios.get("https://sarassingkat.devasa.web.id/api/books/index");
         console.log("Data fetched from API:", response.data);
 
         if (Array.isArray(response.data)) {
@@ -64,7 +64,7 @@ const KelolaBuku = ({ onAdd }) => {
       });
 
       if (result.isConfirmed) {
-        const response = await axios.delete(`http://sarassingkat.devasa.web.id/api/books/delete/${bookId}`);
+        const response = await axios.delete(`https://sarassingkat.devasa.web.id/api/books/delete/${bookId}`);
         if (response.data.status === "SUCCESS") {
           setBooks(books.filter((book) => book.id !== bookId));
           setFilteredBooks(filteredBooks.filter((book) => book.id !== bookId));
@@ -118,7 +118,7 @@ const KelolaBuku = ({ onAdd }) => {
       let response;
 
       if (mode === "add") {
-        response = await axios.post("http://sarassingkat.devasa.web.id/api/books/tambah-buku", formData, {
+        response = await axios.post("https://sarassingkat.devasa.web.id/api/books/tambah-buku", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -133,7 +133,7 @@ const KelolaBuku = ({ onAdd }) => {
           Swal.fire("Gagal menambahkan buku", response.data.message, "error");
         }
       } else if (mode === "edit") {
-        response = await axios.put(`http://sarassingkat.devasa.web.id/api/books/update/${newBook.id}`, formData, {
+        response = await axios.put(`https://sarassingkat.devasa.web.id/api/books/update/${newBook.id}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

@@ -45,7 +45,7 @@ const Signup = () => {
     };
 
     try {
-      const response = await axios.post("http://sarassingkat.devasa.web.id/api/users/signup", sendData);
+      const response = await axios.post("https://sarassingkat.devasa.web.id/api/users/signup", sendData);
       console.log(response.data);
     } catch (error) {
       console.error("There was an error!", error);
