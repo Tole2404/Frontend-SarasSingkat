@@ -9,7 +9,7 @@ import LoginComponents from "../../components/LoginComponents";
 import { EyeSlash, Eye } from "react-bootstrap-icons";
 
 const Login = () => {
-  const navigate = useNavigate(); // Use useNavigate instead of useHistory
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -27,17 +27,17 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:5000/api/users/login", formData);
+      const response = await axios.post("http://sarassingkat.devasa.web.id/api/users/login", formData);
 
       if (response.data.status === "SUCCESS") {
         const { role } = response.data.user;
 
         if (role === "pembaca") {
-          navigate("/dashboard-pembaca"); // Use navigate instead of history.push
+          navigate("/dashboard-pembaca");
         } else if (role === "penulis") {
-          navigate("/dashboard-penulis"); // Use navigate instead of history.push
+          navigate("/dashboard-penulis");
         } else {
-          navigate("/"); // Redirect to homepage if role is unknown
+          navigate("/");
         }
       } else {
         setErrorMessage(response.data.message);

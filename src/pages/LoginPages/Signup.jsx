@@ -31,13 +31,11 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Memeriksa apakah password dan konfirmasi password cocok
     if (formData.password !== formData.confirmPassword) {
       alert("Konfirmasi password tidak cocok dengan password.");
       return;
     }
 
-    // Membuat objek data yang akan dikirimkan ke backend
     const sendData = {
       nama_depan: formData.nama_depan,
       nama_belakang: formData.nama_belakang,
@@ -47,9 +45,8 @@ const Signup = () => {
     };
 
     try {
-      const response = await axios.post("http://localhost:5000/api/users/signup", sendData);
+      const response = await axios.post("http://sarassingkat.devasa.web.id/api/users/signup", sendData);
       console.log(response.data);
-      // Anda dapat menambahkan logika redirect atau pesan sukses di sini
     } catch (error) {
       console.error("There was an error!", error);
     }

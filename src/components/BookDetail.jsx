@@ -14,8 +14,8 @@ const BookDetail = () => {
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/books/view/${bookId}`);
-        if (response.data.status === 'SUCCESS') {
+        const response = await axios.get(`http://sarassingkat.devasa.web.id/api/books/view/${bookId}`);
+        if (response.data.status === "SUCCESS") {
           setBook(response.data.data);
         } else {
           console.error(response.data.message);
@@ -47,10 +47,7 @@ const BookDetail = () => {
   const { ringkasan_buku: description } = book;
 
   // Determine which part of the description to show based on paragraph count
-  const descriptionToShow =
-    countParagraphs(description) >= 3
-      ? description.replace(/\r\n|\r|\n/g, " ")
-      : description;
+  const descriptionToShow = countParagraphs(description) >= 3 ? description.replace(/\r\n|\r|\n/g, " ") : description;
 
   // JSX rendering with the fetched book details
   return (
@@ -62,11 +59,7 @@ const BookDetail = () => {
             <Card className="d-flex justify-content-center align-items-center">
               <Row className="g-0 d-flex">
                 <Col md={4}>
-                  <Card.Img
-                    variant="top"
-                    src={book.image}
-                    className="img-fluid rounded-start"
-                  />
+                  <Card.Img variant="top" src={book.image} className="img-fluid rounded-start" />
                 </Col>
                 <Col md={8} className="pt-5">
                   <Card.Body>
@@ -81,11 +74,10 @@ const BookDetail = () => {
                 <Card.Text>
                   {showFullDescription
                     ? descriptionToShow || "" // Handle undefined case with empty string
-                    : `${(descriptionToShow || "").substring(0, 500)}...`} {/* Handle undefined case with empty string */}
+                    : `${(descriptionToShow || "").substring(0, 500)}...`}{" "}
+                  {/* Handle undefined case with empty string */}
                   <Button variant="link" onClick={toggleDescription}>
-                    {showFullDescription
-                      ? "Tampilkan Lebih Sedikit"
-                      : "Baca Selengkapnya"}
+                    {showFullDescription ? "Tampilkan Lebih Sedikit" : "Baca Selengkapnya"}
                   </Button>
                 </Card.Text>
               </Card.Body>
