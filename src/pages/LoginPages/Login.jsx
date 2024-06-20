@@ -8,12 +8,6 @@ import LoginComponents from "../../components/LoginComponents";
 
 import { EyeSlash, Eye } from "react-bootstrap-icons";
 
-// Create Axios instance with base URL and timeout
-const instance = axios.create({
-  baseURL: "https://sarassingkat.devasa.web.id/api", // Adjust the base URL to your API
-  timeout: 10000, // 10 seconds timeout
-});
-
 const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -33,9 +27,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      console.log("Sending request to:", instance.defaults.baseURL + "/users/login");
-      console.log("Form data:", formData);
-      const response = await instance.post("/users/login", formData); // Use Axios instance
+      const response = await axios.post("http://sarassingkat.devasa.web.id/api/users/login", formData);
 
       if (response.data.status === "SUCCESS") {
         const { role } = response.data.user;
@@ -52,19 +44,7 @@ const Login = () => {
       }
     } catch (error) {
       console.error("There was an error!", error);
-      if (error.response) {
-        // Server responded with a status other than 200 range
-        console.error("Error response:", error.response.data);
-        setErrorMessage(error.response.data.message);
-      } else if (error.request) {
-        // Request was made but no response received
-        console.error("Error request:", error.request);
-        setErrorMessage("Network error: No response received from server");
-      } else {
-        // Something happened in setting up the request
-        console.error("Error message:", error.message);
-        setErrorMessage(error.message);
-      }
+      setErrorMessage("Login gagal. Silakan coba lagi.");
     }
   };
 

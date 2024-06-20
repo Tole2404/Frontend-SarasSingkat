@@ -1,24 +1,22 @@
 import { useState } from "react";
 import { Button, Form, Row, Col, Tab, Tabs, InputGroup, FormControl } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoginComponents from "../../components/LoginComponents";
 import "../../styles/css/authentifikasi.css";
 import logo from "../../assets/logo.svg";
 import axios from "axios";
 import { EyeSlash, Eye } from "react-bootstrap-icons";
+import Swal from "sweetalert2"; // Import SweetAlert2
 
 const Signup = () => {
-  const queryParams = new URLSearchParams(location.search);
-  const roleFromQuery = queryParams.get("role");
-
-  const [key, setKey] = useState("pembaca");
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nama_depan: "",
     nama_belakang: "",
-    role: "pembaca",
     email: "",
     password: "",
     confirmPassword: "",
+    role: "pembaca",
   });
 
   const handleChange = (e) => {
@@ -32,7 +30,11 @@ const Signup = () => {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      alert("Konfirmasi password tidak cocok dengan password.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Konfirmasi password tidak cocok dengan password.",
+      });
       return;
     }
 
@@ -46,9 +48,30 @@ const Signup = () => {
 
     try {
       const response = await axios.post("https://sarassingkat.devasa.web.id/api/users/signup", sendData);
-      console.log(response.data);
+      if (response.data.status === "SUCCESS") {
+        Swal.fire({
+          icon: "success",
+          title: "Pendaftaran Berhasil!",
+          text: "Akun Anda telah berhasil dibuat.",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/login");
+          }
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Pendaftaran Gagal",
+          text: response.data.message || "Tidak dapat mendaftar. Silakan coba lagi.",
+        });
+      }
     } catch (error) {
       console.error("There was an error!", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Terjadi kesalahan saat pendaftaran. Silakan coba lagi.",
+      });
     }
   };
 
@@ -74,16 +97,10 @@ const Signup = () => {
               </Link>
               <h3 className="text-center">SarasSingkat</h3>
             </div>
-            <div className="signin-as mb-2">
-              <div className="line"></div>
-              <p>Masuk Sebagai</p>
-              <div className="line"></div>
-            </div>
             <Tabs
               id="controlled-tab-example"
-              activeKey={key}
+              activeKey={formData.role}
               onSelect={(k) => {
-                setKey(k);
                 setFormData({
                   ...formData,
                   role: k,

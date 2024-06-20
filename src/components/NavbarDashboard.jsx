@@ -5,8 +5,10 @@ import { FaUser, FaSignOutAlt } from "react-icons/fa";
 import { navLinksDashboard, navLinksDashboardPenulis } from "../data/index";
 import logo from "../assets/logo.svg";
 import nadia from "../assets/img/testimonial/nadia.jpg";
+import { useAuth } from "../components/UserContext"; // Import hook
 
 const NavbarDashboard = ({ dashboardType }) => {
+  const { logout } = useAuth();
   const [changeColor, setChangeColor] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -14,6 +16,10 @@ const NavbarDashboard = ({ dashboardType }) => {
   useEffect(() => {
     window.addEventListener("scroll", changeBgColor);
     return () => window.removeEventListener("scroll", changeBgColor);
+  }, []);
+
+  useEffect(() => {
+    // Simulate fetching user data from local storage
   }, []);
 
   const changeBgColor = () => {
@@ -24,9 +30,13 @@ const NavbarDashboard = ({ dashboardType }) => {
     }
   };
 
-  // Menentukan basis URL berdasarkan tipe dashboard
   const basePath = dashboardType === "penulis" ? "/dashboard-penulis" : "/dashboard-pembaca";
   const profilePath = `${basePath}/profil`;
+
+  const handleLogout = () => {
+    logout(); // Memanggil fungsi logout dari useUser
+    navigate("/login"); // Mengarahkan user ke halaman login setelah logout
+  };
 
   return (
     <div>
@@ -49,7 +59,7 @@ const NavbarDashboard = ({ dashboardType }) => {
                 </div>
               ))}
             </Nav>
-            <div className="name-profile fw-bold">Bayu</div>
+            <div className="name-profile fw-bold"></div>
             <Dropdown align="end">
               <Dropdown.Toggle variant="success" id="dropdown-basic" style={{ backgroundColor: "transparent", borderColor: "transparent" }}>
                 <img src={nadia} alt="profile" style={{ borderRadius: "50%", width: "40px", height: "40px" }} />
@@ -58,14 +68,14 @@ const NavbarDashboard = ({ dashboardType }) => {
               <Dropdown.Menu>
                 <div className="dropdown-header text-center">
                   <img src={nadia} alt="profile" style={{ borderRadius: "50%", width: "60px", height: "60px" }} />
-                  <div className="fw-bold">Bayu</div>
-                  <div className="text-muted">Penulis</div>
+                  <div className="fw-bold"></div>
+                  <div className="text-muted"></div>
                 </div>
                 <Dropdown.Divider />
                 <Dropdown.Item as={Link} to={profilePath}>
                   <FaUser className="me-2" /> Profil
                 </Dropdown.Item>
-                <Dropdown.Item>
+                <Dropdown.Item onClick={handleLogout}>
                   <FaSignOutAlt className="me-2" /> Keluar
                 </Dropdown.Item>
               </Dropdown.Menu>
