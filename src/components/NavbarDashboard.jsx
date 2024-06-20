@@ -1,26 +1,23 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Navbar, Container, Nav, Dropdown } from "react-bootstrap";
-import { useNavigate, NavLink, Link, useLocation } from "react-router-dom";
+import { useNavigate, NavLink, Link } from "react-router-dom";
 import { FaUser, FaSignOutAlt } from "react-icons/fa";
-import { navLinksDashboard, navLinksDashboardPenulis } from "../data/index";
+import { navLinksDashboard } from "../data/index";
 import logo from "../assets/logo.svg";
-import nadia from "../assets/img/testimonial/nadia.jpg";
-import { useAuth } from "../components/UserContext"; // Import hook
+import default1 from "../assets/img/testimonial/default.jpg";
+import { useAuth } from "../components/UserContext";
 
 const NavbarDashboard = ({ dashboardType }) => {
   const { logout } = useAuth();
   const [changeColor, setChangeColor] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     window.addEventListener("scroll", changeBgColor);
     return () => window.removeEventListener("scroll", changeBgColor);
   }, []);
 
-  useEffect(() => {
-    // Simulate fetching user data from local storage
-  }, []);
+  useEffect(() => {}, []);
 
   const changeBgColor = () => {
     if (window.scrollY > 10) {
@@ -34,8 +31,8 @@ const NavbarDashboard = ({ dashboardType }) => {
   const profilePath = `${basePath}/profil`;
 
   const handleLogout = () => {
-    logout(); // Memanggil fungsi logout dari useUser
-    navigate("/login"); // Mengarahkan user ke halaman login setelah logout
+    logout();
+    navigate("/login");
   };
 
   return (
@@ -62,12 +59,12 @@ const NavbarDashboard = ({ dashboardType }) => {
             <div className="name-profile fw-bold"></div>
             <Dropdown align="end">
               <Dropdown.Toggle variant="success" id="dropdown-basic" style={{ backgroundColor: "transparent", borderColor: "transparent" }}>
-                <img src={nadia} alt="profile" style={{ borderRadius: "50%", width: "40px", height: "40px" }} />
+                <img src={default1} alt="profile" style={{ borderRadius: "50%", width: "40px", height: "40px" }} />
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
                 <div className="dropdown-header text-center">
-                  <img src={nadia} alt="profile" style={{ borderRadius: "50%", width: "60px", height: "60px" }} />
+                  <img src={default1} alt="profile" style={{ borderRadius: "50%", width: "60px", height: "60px" }} />
                   <div className="fw-bold"></div>
                   <div className="text-muted"></div>
                 </div>
