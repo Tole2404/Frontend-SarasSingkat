@@ -27,7 +27,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://sarassingkat.devasa.web.id/api/users/login", formData);
+      const response = await axios.post("https://sarassingkat.devasa.web.id/api/users/login", formData);
 
       if (response.data.status === "SUCCESS") {
         const { role } = response.data.user;
